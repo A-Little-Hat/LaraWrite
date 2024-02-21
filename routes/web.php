@@ -39,12 +39,13 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/upload', [UploadController::class, 'store'])->name('upload');
 
-Route::get('/post/addpost', [PostController::class, 'addPost']);
+Route::get('/post/addpost', [PostController::class, 'addPost'])->middleware(['auth', 'verified']);
 Route::get('/post/all', [PostController::class, 'viewAllPost']);
 Route::get('/post/username/{name}', [PostController::class, 'viewPost']);
-Route::get('/post/delete/{postid}', [PostController::class, 'deletePost']);
-Route::get('/post/update/{postid}', [PostController::class, 'updatePostData']);
-Route::post('/post/update/{postid}', [PostController::class, 'updatePost']);
+Route::get('/post/delete/{postid}', [PostController::class, 'deletePost'])->middleware(['auth', 'verified']);
+Route::get('/post/update/{postid}', [PostController::class, 'updatePostData'])->middleware(['auth', 'verified']);
+Route::post('/post/update/{postid}', [PostController::class, 'updatePost'])->middleware(['auth', 'verified']);
+Route::get('/demo', [PostController::class, 'demo']);
 
 
 require __DIR__.'/auth.php';

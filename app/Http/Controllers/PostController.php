@@ -56,12 +56,16 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
-        Post::where('id', $postid)
-              ->update(['title' => $req->title, 'content' => $req->content]);
-
-        // return redirect()->route('/post/username/'.$user->name);
-        $posts = Post::where('author', $user->name)->get();
-        return view('post', ['posts' => $posts, 'display' => true]);
+        if(Post::where('id', $postid)->get()[0]['author'] == $user->name){
+            Post::where('id', $postid)
+                  ->update(['title' => $req->title, 'content' => $req->content]);
+    
+            return redirect('/post/username/'.$user->name);
+            // $posts = Post::where('author', $user->name)->get();
+            // return view('post', ['posts' => $posts, 'display' => true]);
+        }else{
+            return "invalid access";
+        }
     }
 
     public function deletePost($postid){
@@ -69,5 +73,10 @@ class PostController extends Controller
         Post::where('id', $postid)->delete();
         $posts = Post::where('author', $user->name)->get();
         return view('post', ['posts' => $posts, 'display' => true]);
+    }
+
+    public function demo(){
+        $data = Post::where('id', '4')->get()[0];
+        echo "<pre>"; echo $data['author'];
     }
 }
