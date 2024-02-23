@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use App\Models\Like;
 
 
 use Illuminate\Http\Request;
@@ -20,11 +21,13 @@ class PostController extends Controller
     }
 
     public function viewAllPost(){
+        $user = Auth::user();
         // Fetch all posts from the database
         $posts = Post::all();
-
+        // $user = Auth::user(); 
+        $likes = Like::select('post_id')->where('user_id',$user->id)->get();
         // Pass the posts data to the view for rendering
-        return view('allpost', ['posts' => $posts]);
+        return view('allpost', ['posts' => $posts, 'likes'=> $likes, 'auth'=> $user ]);
     }
 
     public function addPost(Request $request){
@@ -39,6 +42,7 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->author = $user->name;
         $post->content = $request->input('content');
+        $post->like_count = 0;
         $post->save();
 
         // Redirect back or wherever you want
@@ -76,7 +80,9 @@ class PostController extends Controller
     }
 
     public function demo(){
-        $data = Post::where('id', '4')->get()[0];
-        echo "<pre>"; echo $data['author'];
+        $user = Auth::user();
+        $likes = Like::select('post_id')->where('user_id',$user->id)->get();
+        echo "<pre>";echo $likes[0]['post_id'];  
+             dd();
     }
 }

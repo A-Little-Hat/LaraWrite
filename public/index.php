@@ -1,4 +1,5 @@
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <?php
 
 use Illuminate\Contracts\Http\Kernel;
