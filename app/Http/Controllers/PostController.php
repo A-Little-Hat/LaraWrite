@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\Like;
+use App\Models\User;
 
 
 use Illuminate\Http\Request;
@@ -79,10 +80,12 @@ class PostController extends Controller
         return view('post', ['posts' => $posts, 'display' => true]);
     }
 
+    // public function allUser(){
+    //     $user = Auth::user();
+    //     $allUser = User::whereNotIn('id',$user->id)->get();
+    // }
+
     public function demo(){
-        $user = Auth::user();
-        $likes = Like::select('post_id')->where('user_id',$user->id)->get();
-        echo "<pre>";echo $likes[0]['post_id'];  
-             dd();
+        return view('temp');
     }
 }

@@ -20,17 +20,19 @@
     text.innerText=="💙"?sub():add()
   }
 </script>
-<div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+<x-app-layout>
+<div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
 @foreach ($posts as $post)
-<article class="h-max px-10 flex max-w-xl flex-col items-start justify-between">
+<article class=" p-10 m-10 h-max px-10 flex max-w-xl flex-col items-start justify-between bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-70 border border-gray-100
+">
         <div class="group relative main">
-          <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+          <h3 class="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-white">
             <a href="#">
               <span class="absolute inset-0"></span>
               {{ $post->title }}
             </a>
           </h3>
-          <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{{ $post->content }}</p>
+          <p class="mt-5 line-clamp-3 text-sm leading-6 text-white">{{ $post->content }}</p>
         </div>
         @auth
         <button id="" onclick="like({{$post->id}})">
@@ -44,11 +46,11 @@
         @endif
         @endforeach
         @endauth
-        <span id="count-{{$post->id}}" >{{ $post->like_count }} people liked</span>
+        <span class="text-white" id="count-{{$post->id}}" >{{ $post->like_count }} people liked</span>
         <div class="relative mt-8 flex items-center gap-x-4">
           <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed={{$post->author}}" alt="" class="h-10 w-10 rounded-full bg-gray-50">
           <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
+            <p class="font-semibold text-white">
               <a href="#">
                 <span class="absolute inset-0"></span>
                 {{ $post->author }}
@@ -60,6 +62,7 @@
 @endforeach
 
 </div>
+</x-app-layout>
 <style>
   .main{
     border:1px solid;
